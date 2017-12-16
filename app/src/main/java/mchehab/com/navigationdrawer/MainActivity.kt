@@ -2,6 +2,7 @@ package mchehab.com.navigationdrawer
 
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -11,6 +12,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    val cameraFragment = CameraFragment()
+    val galleryFragment = GalleryFragment()
+    val sendFragment = SendFragment()
+    val shareFragment = ShareFragment()
+    val slideShowFragment = SlideShowFragment()
+    val toolsFragment = ToolsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +31,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         navigationView.setNavigationItemSelectedListener(this)
+
+        if(savedInstanceState == null){
+            addFragment(cameraFragment)
+        }
     }
 
     override fun onBackPressed() {
@@ -46,29 +58,40 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
+        var selectedFragment = Fragment()
         when (item.itemId) {
             R.id.nav_camera -> {
-                // Handle the camera action
+                selectedFragment = cameraFragment
             }
             R.id.nav_gallery -> {
-
+                selectedFragment = galleryFragment
             }
             R.id.nav_slideshow -> {
-
+                selectedFragment = slideShowFragment
             }
             R.id.nav_manage -> {
-
+                selectedFragment = toolsFragment
             }
             R.id.nav_share -> {
-
+                selectedFragment = shareFragment
             }
             R.id.nav_send -> {
-
+                selectedFragment = sendFragment
             }
         }
+
+        replaceFragment(selectedFragment)
 
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
+
+    private fun addFragment(fragment: Fragment){
+        supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment).commit()
+    }
+
+    private fun replaceFragment(fragment: Fragment){
+        supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit()
+    }
+
 }
