@@ -68,24 +68,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             return false
         }
         when (item.itemId) {
-            R.id.nav_camera -> {
-                selectedFragment = cameraFragment
-            }
-            R.id.nav_gallery -> {
-                selectedFragment = galleryFragment
-            }
-            R.id.nav_slideshow -> {
-                selectedFragment = slideShowFragment
-            }
-            R.id.nav_manage -> {
-                selectedFragment = toolsFragment
-            }
-            R.id.nav_share -> {
-                selectedFragment = shareFragment
-            }
-            R.id.nav_send -> {
-                selectedFragment = sendFragment
-            }
+            R.id.nav_camera -> selectedFragment = cameraFragment
+            R.id.nav_gallery -> selectedFragment = galleryFragment
+            R.id.nav_slideshow -> selectedFragment = slideShowFragment
+            R.id.nav_manage -> selectedFragment = toolsFragment
+            R.id.nav_share -> selectedFragment = shareFragment
+            R.id.nav_send -> selectedFragment = sendFragment
         }
         currentMenuItem = item.itemId
         replaceFragment(selectedFragment)
