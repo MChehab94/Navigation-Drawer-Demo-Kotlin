@@ -20,10 +20,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val slideShowFragment = SlideShowFragment()
     val toolsFragment = ToolsFragment()
 
+    var currentMenuItem = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        currentMenuItem = R.id.nav_camera//default value set to first item
 
         val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -59,6 +63,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         var selectedFragment = Fragment()
+        if(item.itemId == currentMenuItem){
+            drawerLayout.closeDrawer(GravityCompat.START)
+            return false
+        }
         when (item.itemId) {
             R.id.nav_camera -> {
                 selectedFragment = cameraFragment
@@ -79,7 +87,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 selectedFragment = sendFragment
             }
         }
-
+        currentMenuItem = item.itemId
         replaceFragment(selectedFragment)
 
         drawerLayout.closeDrawer(GravityCompat.START)
