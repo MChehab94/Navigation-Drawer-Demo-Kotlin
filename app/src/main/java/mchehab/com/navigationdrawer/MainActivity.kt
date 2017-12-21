@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun replaceFragment(fragment: Fragment){
-        supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragment)
+                .addToBackStack(null).commit()
     }
-
 }
