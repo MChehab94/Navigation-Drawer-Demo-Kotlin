@@ -1,5 +1,6 @@
 package mchehab.com.navigationdrawer
 
+import android.app.FragmentManager
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val slideShowFragment = SlideShowFragment()
     val toolsFragment = ToolsFragment()
 
+    var currentFragment: Fragment = cameraFragment
     var currentMenuItem = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +47,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
+            if(currentFragment.equals(cameraFragment)){
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                super.onBackPressed()
+            }else{
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                replaceFragment(cameraFragment)
+            }
             super.onBackPressed()
         }
     }
@@ -83,10 +92,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun addFragment(fragment: Fragment){
+        currentFragment = fragment
         supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment).commit()
     }
 
     private fun replaceFragment(fragment: Fragment){
+        currentFragment = fragment
         supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragment)
                 .addToBackStack(null).commit()
     }
